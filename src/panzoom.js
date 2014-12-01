@@ -660,8 +660,20 @@
 			if (options.maxScale && scale > options.maxScale) {
 				scale = options.maxScale;
 			}
-			if (options.minScale && scale < options.minScale) {
-				scale = options.minScale;
+			if (options.contain !== 'invert') {
+				if (options.minScale && scale < options.minScale) {
+					scale = options.minScale;
+				}
+			} else {
+				// Limit scale to prevent that the element gets too small
+				var dims = this._checkDims(),
+				    aspectRatioX = this.container.width / (dims.width + dims.widthBorder),
+					aspectRatioY = this.container.height / (dims.height + dims.heightBorder);
+				if (scale < aspectRatioX) { scale = aspectRatioX; }
+				if (scale < aspectRatioY) { scale = aspectRatioY; }
+				if (options.minScale && scale < options.minScale) {
+					scale = options.minScale;
+				}
 			}
 
 			// Calculate focal point based on scale
