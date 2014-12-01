@@ -657,9 +657,10 @@
 			}
 
 			// Constrain scale
-			if (scale > options.maxScale) {
+			if (options.maxScale && scale > options.maxScale) {
 				scale = options.maxScale;
-			} else if (scale < options.minScale) {
+			}
+			if (options.minScale && scale < options.minScale) {
 				scale = options.minScale;
 			}
 
