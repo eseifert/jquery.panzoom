@@ -287,9 +287,9 @@
 		disablePan: false,
 		disableZoom: false,
 
-		// The increment at which to zoom
-		// adds/subtracts to the scale each time zoomIn/Out is called
-		increment: 0.3,
+		// The factor at which to zoom
+		// multiplies/divides to the scale each time zoomIn/Out is called
+		scaleFactor: 1.1,
 
 		minScale: 0.4,
 		maxScale: 5,
@@ -622,7 +622,7 @@
 		/**
 		 * Zoom in/out the element using the scale properties of a transform matrix
 		 * @param {Number|Boolean} [scale] The scale to which to zoom or a boolean indicating to transition a zoom out
-		 * @param {Object} [opts] All global options can be overwritten by this options object. For example, override the default increment.
+		 * @param {Object} [opts] All global options can be overwritten by this options object. For example, override the default scale factor.
 		 * @param {Boolean} [opts.noSetRange] Specify that the method should not set the $zoomRange value (as is the case when $zoomRange is calling zoom on change)
 		 * @param {jQuery.Event|Object} [opts.focal] A focal point on the panzoom element on which to zoom.
 		 *  If an object, set the clientX and clientY properties to the position relative to the parent
@@ -650,9 +650,9 @@
 			var animate = false;
 			var matrix = options.matrix || this.getMatrix();
 
-			// Calculate zoom based on increment
+			// Calculate zoom based on scale factor
 			if (typeof scale !== 'number') {
-				scale = +matrix[0] + (options.increment * (scale ? -1 : 1));
+				scale = scale ? +matrix[0] / options.scaleFactor : +matrix[0] * options.scaleFactor;
 				animate = true;
 			}
 
@@ -1092,10 +1092,10 @@
 
 					// Calculate move on middle point
 					var middle = self._getMiddle(touches = e.touches);
-					var diff = self._getDistance(touches) - startDistance;
+					var ratio = self._getDistance(touches) / startDistance;
 
 					// Set zoom
-					self.zoom(diff * (options.increment / 100) + startScale, {
+					self.zoom(ratio * startScale, {
 						focal: middle,
 						matrix: matrix,
 						animate: false
