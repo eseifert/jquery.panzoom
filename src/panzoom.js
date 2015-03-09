@@ -288,7 +288,7 @@
 		disableZoom: false,
 
 		// The factor at which to zoom
-		// multiplies/divides to the scale each time zoomIn/Out is called
+		// multiplies/divides the scale each time zoomIn/Out is called
 		scaleFactor: 1.1,
 
 		minScale: 0.4,
@@ -358,7 +358,7 @@
 		},
 
 		/**
-		 * Builds the restricing dimensions from the containment element
+		 * Builds the restricting dimensions from the containment element
 		 * Also used with focal points
 		 * Call this method whenever the dimensions of the element or parent are changed
 		 */
