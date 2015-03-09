@@ -307,7 +307,10 @@
 		// Note: this does not affect zooming outside of the parent
 		// Set this value to 'invert' to only allow panning outside of the parent element (basically the opposite of the normal use of contain)
 		// 'invert' is useful for a large panzoom element where you don't want to show anything behind it
-		contain: false
+		contain: false,
+
+		// Some rendering scenarios can't be done with a separate compositing layer
+		disableCompositing: false
 	};
 
 	Panzoom.prototype = {
@@ -753,6 +756,7 @@
 		_setOptions: function(options) {
 			$.each(options, $.proxy(function(key, value) {
 				switch(key) {
+					case 'disableCompositing':
 					case 'disablePan':
 						this._resetStyle();
 						/* falls through */
@@ -772,6 +776,7 @@
 				}
 				this.options[ key ] = value;
 				switch(key) {
+					case 'disableCompositing':
 					case 'disablePan':
 						this._initStyle();
 						/* falls through */
@@ -830,11 +835,13 @@
 		 */
 		_initStyle: function() {
 			var styles = {
-				// Promote the element to it's own compositor layer
-				'backface-visibility': 'hidden',
 				// Set to defaults for the namespace
 				'transform-origin': this.isSVG ? '0 0' : '50% 50%'
 			};
+			if (!this.options.disableCompositing) {
+				// Promote the element to it's own compositor layer
+				'backface-visibility': 'hidden',
+			}
 			// Set elem styles
 			if (!this.options.disablePan) {
 				styles.cursor = this.options.cursor;
