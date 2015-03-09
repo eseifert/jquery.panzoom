@@ -840,7 +840,7 @@
 			};
 			if (!this.options.disableCompositing) {
 				// Promote the element to it's own compositor layer
-				'backface-visibility': 'hidden',
+				styles.backfaceVisibility = 'hidden';
 			}
 			// Set elem styles
 			if (!this.options.disablePan) {
