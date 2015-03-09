@@ -670,8 +670,8 @@
 			} else {
 				// Limit scale to prevent that the element gets too small
 				var dims = this._checkDims(),
-					aspectRatioY = this.container.height / (dims.height + dims.heightBorder),
-					realMinScale = options.minScale || 0.0;
+				    aspectRatioY = this.container.height / (dims.height + dims.heightBorder),
+				    realMinScale = options.minScale || 0.0;
 				if (realMinScale < aspectRatioX) { realMinScale = aspectRatioX; }
 				if (realMinScale < aspectRatioY) { realMinScale = aspectRatioY; }
 				if (scale < realMinScale) { scale = realMinScale; }
